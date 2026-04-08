@@ -12,11 +12,11 @@ export class UsersService {
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>) { }
 
   async create(createUserDto: CreateUserDto) {
-    const role = await this.roleRepository.findOneBy({ name: createUserDto.role });
+    // const role = await this.roleRepository.findOneBy({ name: createUserDto.role });
 
-    if (!role) {
-      throw new Error('Role not found');
-    }
+    // if (!role) {
+    //   throw new Error('Role not found');
+    // }
 
     const user = this.userRepository.create({
       name: createUserDto.name,
