@@ -28,11 +28,7 @@ export class AuthService {
         //retornamos el token de session con la informacion del usuario
         const payload = { email: findUser.email, role: findUser.role };
         //->
-        const token = await this.jwtService.signAsync({
-            ...payload,
-            secret: process.env.SECRET_KEY,
-            expiresIn: '1h'
-        });
+        const token = await this.jwtService.signAsync(payload);
 
         return {
             token: token,
@@ -52,7 +48,7 @@ export class AuthService {
         const user = await this.userService.create({
             name: registerDto.name,
             email: registerDto.email,
-            password: await bcryptjs.hash(registerDto.password, +process.env.HASH_SALT_OR_ROUNDS),
+            password: await bcryptjs.hash(registerDto.password, process.env.HASH_SALT_OR_ROUNDS || 10),
             //colocamos el + para convertir el valor a number, ya que por defecto las env variables son string
             role: 'user'
         });

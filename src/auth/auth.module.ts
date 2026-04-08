@@ -3,20 +3,25 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UsersModule } from 'src/users/users.module';
 import { JwtModule } from '@nestjs/jwt'; //se importa el JwtModule para poder usarlo en el AuthService
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
     UsersModule,
-    JwtModule.register({
-      global: true,
-      secret: process.env.SECRET_KEY,
-      signOptions: { expiresIn: "1d" },
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>("SECRET_KEY"),
+        signOptions: { expiresIn: "1d" },
+        global: true,
+      }),
+      inject: [ConfigService],
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService]
+  providers: [AuthService],
+  exports: [JwtModule] //exportamos el AuthService para poder usarlo en otros modulos, como el UsersModule por ejemplo
 })
 export class AuthModule { }
