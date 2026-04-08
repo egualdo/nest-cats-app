@@ -52,7 +52,7 @@ export class AuthService {
         const user = await this.userService.create({
             name: registerDto.name,
             email: registerDto.email,
-            password: await bcryptjs.hash(registerDto.password, process.env.HASH_SALT_OR_ROUNDS),
+            password: await bcryptjs.hash(registerDto.password, +process.env.HASH_SALT_OR_ROUNDS),
             //colocamos el + para convertir el valor a number, ya que por defecto las env variables son string
             role: 'user'
         });
