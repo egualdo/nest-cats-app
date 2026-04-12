@@ -1,5 +1,4 @@
 import { Exclude } from "class-transformer";
-import { Role } from "../../common/enums/role.enum";
 import { Role as RoleEntity } from "src/roles/entities/role.entity";
 import { Column, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
