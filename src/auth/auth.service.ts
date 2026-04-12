@@ -5,11 +5,15 @@ import { RegisterDto } from './dto/register.dto';
 import * as bcryptjs from 'bcryptjs';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from "@nestjs/jwt";
+import { Role } from 'src/common/enums/role.enum';
+import { RolesService } from 'src/roles/roles.service';
 
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly userService: UsersService, private readonly jwtService: JwtService) { }
+    constructor(private readonly userService: UsersService,
+        private readonly jwtService: JwtService,
+        private readonly roleService: RolesService) { }
 
 
     async login(loginDto: LoginDto) {
@@ -45,12 +49,16 @@ export class AuthService {
             throw new BadRequestException('User already exists');
         }
 
+        const role = await this.roleService.findOneByName({ name: Role.USER });
+        if (!role) {
+            throw new BadRequestException('Role not found');
+        }
         const user = await this.userService.create({
             name: registerDto.name,
             email: registerDto.email,
             password: await bcryptjs.hash(registerDto.password, +process.env.HASH_SALT_OR_ROUNDS || 10),
             //colocamos el + para convertir el valor a number, ya que por defecto las env variables son string
-            role: 'user'
+            role: role.id
         });
 
         return { user: user.email, role: user.role };
