@@ -1,6 +1,7 @@
 import { Exclude } from "class-transformer";
 import { Role } from "../../common/enums/role.enum";
-import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Role as RoleEntity } from "src/roles/entities/role.entity";
+import { Column, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -14,9 +15,16 @@ export class User {
     @Column({ nullable: false })
     @Exclude()
     password!: string;
-    @Column({ type: "enum", enum: Role, default: Role.USER })
-    role!: Role;
+    // @Column({ type: "enum", enum: Role, default: Role.USER })
+    // role!: Role;
     @DeleteDateColumn()
     deletedAt!: Date;
+
+    @ManyToOne(() => RoleEntity, role => role.users)
+    @JoinColumn({ name: 'roleUser', referencedColumnName: 'id' })
+    role!: RoleEntity;
+
+    @Column()
+    roleUser!: number;
 
 }
