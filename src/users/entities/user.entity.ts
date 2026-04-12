@@ -20,7 +20,7 @@ export class User {
     @DeleteDateColumn()
     deletedAt!: Date;
 
-    @ManyToOne(() => RoleEntity, role => role.users)
+    @ManyToOne(() => RoleEntity)
     @JoinColumn({ name: 'roleUser', referencedColumnName: 'id' })
     role!: RoleEntity;
 
