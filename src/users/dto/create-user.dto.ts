@@ -9,5 +9,5 @@ export class CreateUserDto {
     @IsString()
     password!: string;
     @IsNumber()
-    role!: number;
+    role!: string;
 }
