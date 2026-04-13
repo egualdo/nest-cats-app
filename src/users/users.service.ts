@@ -22,7 +22,7 @@ export class UsersService {
       name: createUserDto.name,
       email: createUserDto.email,
       password: createUserDto.password,
-      // roleId: createUserDto.roleId
+      roleId: createUserDto.roleId
     });
     return await this.userRepository.save(user);
   }
