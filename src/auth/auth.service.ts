@@ -61,10 +61,10 @@ export class AuthService {
             roleId: role.id
         });
 
-        return { user: user.email, role: user.role };
+        return { user: user.email, roleId: user.roleId };
     }
 
-    async profile({ email, role }: { email: string, role: string }) {
+    async profile({ email, roleId }: { email: string, roleId: number }) {
         return await this.userService.findOneByEmail(email);
     }
 

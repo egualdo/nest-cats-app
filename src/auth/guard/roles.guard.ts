@@ -2,11 +2,12 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from '../decorators/roles.decorator';
 import { Role } from '../../common/enums/role.enum';
+import { RolesService } from 'src/roles/roles.service';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
 
-  constructor(private readonly reflector: Reflector) { }
+  constructor(private readonly reflector: Reflector, private readonly roleService: RolesService) { }
 
   canActivate(
     context: ExecutionContext,
@@ -21,6 +22,7 @@ export class RolesGuard implements CanActivate {
     }
 
     const { user } = context.switchToHttp().getRequest();
+
 
     if (user.roleId === Role.ADMIN) {
       return true;// le damos permiso al admin para acceder a cualquier ruta protegida por este guard
