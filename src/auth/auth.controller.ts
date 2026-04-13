@@ -32,7 +32,7 @@ export class AuthController {
 
     @Post('change-role')
     @Auth(Role.ADMIN)
-    changeRole(@Body() { email, roleId }: { email: string, roleId: number }) {
+    changeRole(@Body() { email, roleId }: { email: string, roleId: string }) {
         return this.authService.changeRole({ email, roleId });
     }
 
