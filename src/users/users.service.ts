@@ -21,7 +21,8 @@ export class UsersService {
     const user = this.userRepository.create({
       name: createUserDto.name,
       email: createUserDto.email,
-      password: createUserDto.password
+      password: createUserDto.password,
+      // roleId: createUserDto.roleId
     });
     return await this.userRepository.save(user);
   }
@@ -52,9 +53,9 @@ export class UsersService {
       throw new Error('User not found');
     }
     let role;
-    if (updateUserDto.role) {
+    if (updateUserDto.roleId) {
       role = await this.roleRepository.findOneBy({
-        id: updateUserDto.role,
+        id: updateUserDto.roleId,
       });
 
       if (!role || role === null) {

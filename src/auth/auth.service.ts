@@ -58,7 +58,7 @@ export class AuthService {
             email: registerDto.email,
             password: await bcryptjs.hash(registerDto.password, +process.env.HASH_SALT_OR_ROUNDS || 10),
             //colocamos el + para convertir el valor a number, ya que por defecto las env variables son string
-            role: role.id
+            roleId: role.id
         });
 
         return { user: user.email, role: user.role };
