@@ -22,10 +22,10 @@ export class RolesGuard implements CanActivate {
 
     const { user } = context.switchToHttp().getRequest();
 
-    if (user.role === Role.ADMIN) {
+    if (user.roleId === Role.ADMIN) {
       return true;// le damos permiso al admin para acceder a cualquier ruta protegida por este guard
     }
 
-    return roles === user.role;
+    return roles === user.roleId;
   }
 }
