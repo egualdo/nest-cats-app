@@ -55,7 +55,7 @@ export class UsersService {
     let role;
     if (updateUserDto.roleId) {
       role = await this.roleRepository.findOneBy({
-        id: updateUserDto.roleId,
+        name: updateUserDto.roleId,
       });
 
       if (!role || role === null) {

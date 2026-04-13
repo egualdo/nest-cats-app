@@ -20,10 +20,10 @@ export class User {
     deletedAt!: Date;
 
     @ManyToOne(() => RoleEntity)
-    @JoinColumn({ name: 'roleId' })
+    @JoinColumn({ name: 'roleId', referencedColumnName: 'name' })
     role!: RoleEntity;
 
     @Column()
-    roleId!: number;
+    roleId!: string;
 
 }

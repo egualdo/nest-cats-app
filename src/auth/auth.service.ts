@@ -58,20 +58,20 @@ export class AuthService {
             email: registerDto.email,
             password: await bcryptjs.hash(registerDto.password, +process.env.HASH_SALT_OR_ROUNDS || 10),
             //colocamos el + para convertir el valor a number, ya que por defecto las env variables son string
-            roleId: role.id
+            roleId: role.name
         });
 
         return { user: user.email, roleId: user.roleId };
     }
 
-    async profile({ email, roleId }: { email: string, roleId: number }) {
+    async profile({ email, roleId }: { email: string, roleId: string }) {
         return await this.userService.findOneByEmail(email);
     }
 
-    async changeRole({ email, roleId }: { email: string, roleId: number }) {
+    async changeRole({ email, roleId }: { email: string, roleId: string }) {
         const user = await this.userService.findOneByEmail(email);
 
-        const role = await this.roleService.findOne(roleId);
+        const role = await this.roleService.findOneByName({ name: roleId });
         if (!role) {
             throw new BadRequestException('Role not found');
         }

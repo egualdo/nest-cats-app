@@ -28,7 +28,7 @@ export class CatsService {
   }
 
   async findAll(user: ActiveUserInterface) {
-    if (user.role === Role.ADMIN) {
+    if (user.roleId === Role.ADMIN) {
       return await this.catRepository.find();
     }
     return await this.catRepository.find({ where: { userEmail: user.email } });
@@ -61,7 +61,7 @@ export class CatsService {
   }
 
   private validateOwner(cat: Cat, user: ActiveUserInterface) {
-    if (user.role !== Role.ADMIN && cat.userEmail !== user.email) {
+    if (user.roleId !== Role.ADMIN && cat.userEmail !== user.email) {
       throw new UnauthorizedException('You are not the owner of this cat');
     }
   }
