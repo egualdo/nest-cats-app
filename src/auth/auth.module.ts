@@ -12,6 +12,7 @@ import { RolesModule } from 'src/roles/roles.module';
       isGlobal: true,
     }),
     UsersModule,
+    RolesModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
@@ -23,7 +24,7 @@ import { RolesModule } from 'src/roles/roles.module';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, RolesService],
+  providers: [AuthService],
   exports: [JwtModule] //exportamos el AuthService para poder usarlo en otros modulos, como el UsersModule por ejemplo
 })
 export class AuthModule { }
