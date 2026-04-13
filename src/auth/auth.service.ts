@@ -70,6 +70,12 @@ export class AuthService {
 
     async changeRole({ email, roleId }: { email: string, roleId: number }) {
         const user = await this.userService.findOneByEmail(email);
+
+        const role = await this.roleService.findOne(roleId);
+        if (!role) {
+            throw new BadRequestException('Role not found');
+        }
+
         if (!user) {
             throw new BadRequestException('User not found');
         }
