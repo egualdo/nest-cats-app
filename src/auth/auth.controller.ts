@@ -29,4 +29,11 @@ export class AuthController {
     profile(@ActiveUser() user: ActiveUserInterface) {
         return this.authService.profile(user);
     }
+
+    @Post('change-role')
+    @Auth(Role.ADMIN)
+    changeRole(@Body() { email, roleId }: { email: string, roleId: number }) {
+        return this.authService.changeRole({ email, roleId });
+    }
+
 }

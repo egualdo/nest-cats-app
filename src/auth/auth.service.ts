@@ -67,4 +67,14 @@ export class AuthService {
     async profile({ email, role }: { email: string, role: string }) {
         return await this.userService.findOneByEmail(email);
     }
+
+    async changeRole({ email, roleId }: { email: string, roleId: number }) {
+        const user = await this.userService.findOneByEmail(email);
+        if (!user) {
+            throw new BadRequestException('User not found');
+        }
+        user.roleId = roleId;
+        return await this.userService.update(user.id, user);
+
+    }
 }
