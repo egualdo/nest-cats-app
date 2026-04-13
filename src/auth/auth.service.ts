@@ -30,14 +30,14 @@ export class AuthService {
         }
 
         //retornamos el token de session con la informacion del usuario
-        const payload = { email: findUser.email, role: findUser.role };
+        const payload = { email: findUser.email, roleId: findUser.roleId };
         //->
         const token = await this.jwtService.signAsync(payload);
 
         return {
             token: token,
             email: findUser.email,
-            role: findUser.role
+            roleId: findUser.roleId
         };
 
     }
