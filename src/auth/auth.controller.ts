@@ -6,7 +6,8 @@ import { Role } from '../common/enums/role.enum';
 import { Auth } from './decorators/auth.decorator';
 import { ActiveUser } from 'src/common/decorators/active-user.decorator';
 import type { ActiveUserInterface } from '../common/interfaces/active-user.interface';
-
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
@@ -21,6 +22,7 @@ export class AuthController {
         return this.authService.register(registerDto);
     }
 
+    @ApiBearerAuth()
     @Get('profile')
     @Auth(Role.ADMIN)
     // @Roles(Role.ADMIN)
@@ -30,6 +32,7 @@ export class AuthController {
         return this.authService.profile(user);
     }
 
+    @ApiBearerAuth()
     @Post('change-role')
     @Auth(Role.ADMIN)
     changeRole(@Body() { email, roleId }: { email: string, roleId: string }) {

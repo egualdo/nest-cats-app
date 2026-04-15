@@ -5,6 +5,8 @@ import { UpdateRoleDto } from './dto/update-role.dto';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { Role } from 'src/common/enums/role.enum';
 import { Auth } from 'src/auth/decorators/auth.decorator';
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('roles')
 @Auth(Role.ADMIN)
 @Controller('roles')
 export class RolesController {
